@@ -1,8 +1,9 @@
 from django import forms
 
 class NewTaskForm(forms.Form):
-    task = forms.CharField(label="New Task", min_length=5)
+    task = forms.CharField(label="New Task", min_length=2)
     priority = forms.IntegerField(label="Priority", min_value=1, max_value=10, initial=5)
+    desc = forms.CharField(label="Details", widget=forms.Textarea)
 
     def clean(self):
         #WRONG: super(NewTaskForm, self.clean())
@@ -19,4 +20,11 @@ class NewTaskForm(forms.Form):
 
 
 class TaskNameForm(forms.Form):
-    task = forms.CharField(label="Task", min_length=5)
+    task = forms.CharField(label="Task", min_length=2)
+
+
+from .models import Task
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = "__all__"

@@ -2,6 +2,15 @@
 
 {% block contents %}
 <h1>My Tasks</h1>
+{% if messages %}
+
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <ul>
     {% for task in tasks %}
     <li>{{ task }} <a href="{url 'tasks:delete' task }">DELETE</a></li>
