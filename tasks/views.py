@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import NewTaskForm
+from .forms import NewTaskForm, TaskNameForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -73,3 +73,25 @@ def add(request):
     else:
         return render(request, "tasks/add.html", {"form": NewTaskForm()})
 
+def delete(request, task):
+    if task in tasks:
+        tasks.remove(task)
+    return redirect('tasks:index')
+
+def delete(request):
+    if request.method == "POST":
+        f = TaskNameForm(request.POST)
+        if f.is_valid():
+            task = f.cleaned_data["task"]
+            if task in tasks:
+                tasks.remove(task)
+                return redirect('tasks:index')
+            else:
+                return render(request, 'tasks/delete.html', {
+                    "form": f,
+                    "errormessage": "Cannot find task to delete"
+                })
+        else:
+            return render(request, 'tasks/delete.html', {"form": f})
+    else:
+        return render(request, "tasks/delete.html", {"form": TaskNameForm()})

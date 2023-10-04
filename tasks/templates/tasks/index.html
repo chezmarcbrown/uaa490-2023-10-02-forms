@@ -1,12 +1,15 @@
  {% extends 'tasks/layout.html' %}
 
- {% block contents %}
-    <h1>My Tasks</h1>
-    <ul>
-        {% for task in tasks %}
-            <li>{{ task }}</li>
-        {% endfor %}
-    </ul> 
+{% block contents %}
+<h1>My Tasks</h1>
+<ul>
+    {% for task in tasks %}
+    <li>{{ task }} <a href="{url 'tasks:delete' task }">DELETE</a></li>
+    {% endfor %}
+</ul>
 
-    <p><a href="{% url 'tasks:add'%}">Add a task</a></p>
+<p>
+    <a href="{% url 'tasks:add'%}">Add a task</a>
+</p>
+<p><a href="{% url 'tasks:delete'%}">Delete a task</a></p>
 {% endblock %}

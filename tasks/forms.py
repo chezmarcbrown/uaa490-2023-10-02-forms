@@ -11,10 +11,12 @@ class NewTaskForm(forms.Form):
         t = self.cleaned_data['task']
         p = self.cleaned_data['priority']
 
-        if p >=4 and len(t) < 10:
+        if p >5 and len(t) < 10:
             self.errors['task'] = self.error_class([
-                'Minimum 10 chars needed when priorty >= 4'
+                'Minimum 10 chars needed when priorty > 5'
             ])
         return self.cleaned_data
 
 
+class TaskNameForm(forms.Form):
+    task = forms.CharField(label="Task", min_length=5)
